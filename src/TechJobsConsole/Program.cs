@@ -21,13 +21,14 @@ namespace TechJobsConsole
             columnChoices.Add("location", "Location");
             columnChoices.Add("position type", "Position Type");
             columnChoices.Add("all", "All");
-
+            // Top line
             Console.WriteLine("Welcome to LaunchCode's TechJobs App!");
 
             // Allow user to search/list until they manually quit with ctrl+c
             while (true)
             {
-
+                // called the GetUserSelection method to return the picked actionChoices. 
+                // Passing choiceHeader and string Dictionary of actionChoices
                 string actionChoice = GetUserSelection("View Jobs", actionChoices);
 
                 if (actionChoice.Equals("list"))
@@ -89,7 +90,7 @@ namespace TechJobsConsole
                 choiceKeys[i] = choice.Key;
                 i++;
             }
-
+            // do while loop
             do
             {
                 Console.WriteLine("\n" + choiceHeader + " by:");
@@ -116,9 +117,27 @@ namespace TechJobsConsole
             return choiceKeys[choiceIdx];
         }
 
-        private static void PrintJobs(List<Dictionary<string, string>> someJobs)
-        {
-            Console.WriteLine("printJobs is not implemented yet");
+        private static void PrintJobs(List<Dictionary<string, string>> AllJobs)
+        {   // The data that is passed in look like this:
+            // AJ = < dict["name":"Junior Dev", "employer":"IBM", "location":"Tampa" ,
+            // "posistion type":"Web-Full Stack", "core competency":"Java"]
+            // , <dict[ next row in the CSV]> >
+            foreach (Dictionary<string, string> entry in AllJobs)
+            {   
+                if (entry.Count == 0)
+                {
+                    Console.WriteLine("No Entry Found...");
+                }
+                Console.WriteLine("*****");
+                // int i = 0;
+                foreach (KeyValuePair<string, string> valuePair in entry)
+                {
+                    string keyName = valuePair.Key;
+                    string value = valuePair.Value;
+                    string upperKey = char.ToUpper(keyName[0]) + keyName.Substring(1);
+                    Console.WriteLine(upperKey + " : " + value);
+                }
+            }
         }
     }
 }
