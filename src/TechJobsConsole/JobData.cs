@@ -121,7 +121,7 @@ namespace TechJobsConsole
             foreach (string[] row in rows)
             {
                 Dictionary<string, string> rowDict = new Dictionary<string, string>();
-                // There is a bug that crashed the program when some value is missing
+                // Crashed the program when some value is missing array is shorter than Header.Length
                 // Added Code to replaced missing Value
                 if (headers.Length > row.Length)
                 {
