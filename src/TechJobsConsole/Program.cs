@@ -58,13 +58,20 @@ namespace TechJobsConsole
                     // What is their search term?
                     Console.WriteLine("\nSearch term: ");
                     string searchTerm = Console.ReadLine();
+                    while (searchTerm.Length < 3)
+                    {
+                        Console.WriteLine("Longer keyword needed\n");
+                        Console.WriteLine("\nSearch term: ");
+                        searchTerm = Console.ReadLine();
+                    }
 
                     List<Dictionary<string, string>> searchResults;
 
                     // Fetch results
                     if (columnChoice.Equals("all"))
                     {
-                        Console.WriteLine("Search all fields not yet implemented.");
+                        searchResults = JobData.FindByValue(searchTerm);
+                        PrintJobs(searchResults);
                     }
                     else
                     {
@@ -99,8 +106,18 @@ namespace TechJobsConsole
                 {
                     Console.WriteLine(j + " - " + choices[choiceKeys[j]]);
                 }
-
+   
                 string input = Console.ReadLine();
+                int num = 0;
+                bool numcheck = int.TryParse(input, out num);
+     
+                while (!numcheck)
+                {
+                    Console.WriteLine("Invalid Entry");
+                    input = Console.ReadLine();
+                    num = 0;
+                    numcheck = int.TryParse(input, out num);
+                }
                 choiceIdx = int.Parse(input);
 
                 if (choiceIdx < 0 || choiceIdx >= choiceKeys.Length)
@@ -129,7 +146,7 @@ namespace TechJobsConsole
             foreach (Dictionary<string, string> entry in AllJobs)
             {   
                 
-                Console.WriteLine("*****");
+                Console.WriteLine("\n-----\n");
                 // int i = 0;
                 foreach (KeyValuePair<string, string> valuePair in entry)
                 {
