@@ -89,7 +89,12 @@ namespace TechJobsConsole
                     }
                 }
             }
-            // Remove index 0 of List<string[]> rows
+            // incase the importing the file failed.
+            if (rows.Count < 1)
+            {
+                return;
+            }
+            // Remove index 0 of List<string[]> rows "Code OG"
             string[] headers = rows[0];
             rows.Remove(headers);
 
@@ -98,15 +103,31 @@ namespace TechJobsConsole
             foreach (string[] row in rows)
             {
                 Dictionary<string, string> rowDict = new Dictionary<string, string>();
-                // pairing the Key header[i] to value row[i]
-                // There is a bug that crashed the program when the Value is Empty
-                for (int i = 0; i < headers.Length; i++)
+                // There is a bug that crashed the program when some value is missing
+                // Added Code to replaced missing Value
+                if (headers.Length > row.Length)
                 {
-                    if (row[i] == null)
+                    string[] newRow = new string[headers.Length];
+                    for (int i = 0; i < row.Length; i++)
                     {
-                        row[i] = "N/A";
+                        newRow[i] = row[i];
                     }
-                    rowDict.Add(headers[i], row[i]);
+                    for (int i = 0; i < headers.Length; i++)
+                    {
+                        if (newRow[i]==null)
+                        {
+                            newRow[i] = "N/A";
+                        }
+                        rowDict.Add(headers[i], newRow[i]);
+                    }
+                }
+                else // Unmodified code below
+                {
+                    // pairing the Key header[i] to value row[i]
+                    for (int i = 0; i < headers.Length; i++)
+                    {
+                        rowDict.Add(headers[i], row[i]);
+                    }
                 }
                 AllJobs.Add(rowDict);
             }

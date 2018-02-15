@@ -122,12 +122,13 @@ namespace TechJobsConsole
             // AJ = < dict["name":"Junior Dev", "employer":"IBM", "location":"Tampa" ,
             // "posistion type":"Web-Full Stack", "core competency":"Java"]
             // , <dict[ next row in the CSV]> >
+            if (AllJobs.Count == 0)
+                {
+                    Console.WriteLine("\nNo Entry Found...");
+                }
             foreach (Dictionary<string, string> entry in AllJobs)
             {   
-                if (entry.Count == 0)
-                {
-                    Console.WriteLine("No Entry Found...");
-                }
+                
                 Console.WriteLine("*****");
                 // int i = 0;
                 foreach (KeyValuePair<string, string> valuePair in entry)
